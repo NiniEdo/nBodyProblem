@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import  {Utils} from './utils';
 
 const fps = 60;
 const fpsInterval = 1000 / fps;
@@ -59,6 +60,10 @@ function addSphere(radius: number, spheres: THREE.Mesh[]) {
     const geometry = new THREE.SphereGeometry(radius, 100, 100);
     const material = new THREE.MeshStandardMaterial({ color: 0x00ff00, flatShading: true });
     const sphere = new THREE.Mesh(geometry, material);
+    const randomness : number = 5;
+    sphere.position.y = Utils.getRandomNumber(-randomness, randomness);
+    sphere.position.x = Utils.getRandomNumber(-randomness, randomness);
+    sphere.position.z = Utils.getRandomNumber(-randomness, randomness);
     scene.add(sphere);
     spheres.push(sphere);
 }
