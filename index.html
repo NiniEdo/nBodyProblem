@@ -5,15 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>N body problem</title>
-    <style>
-        body {
-            margin: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
+    <div id="menu">
+        <div class="dropdown">
+            <button>Menu</button>
+            <div class="dropdown-content">
+                <button id="addBody">Add Body</button>
+                <button id="reset">Reset</button>
+            </div>
+        </div>
+    </div>
     <script type="module" src="/target/renderer.js"></script>
+    <script type="module" src="/target/domHandler.js"></script>
 </body>
-
 </html>
