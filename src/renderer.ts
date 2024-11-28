@@ -3,8 +3,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Utils } from './utils/utils';
 import Solver from './solver';
 
-const fps = 60;
-const fpsInterval = 1000 / fps;
 let then = performance.now();
 
 const scene = new THREE.Scene();
@@ -33,7 +31,7 @@ let spheres: THREE.Mesh[] = [];
 
 function animate(now: number) {
     const deltaTime = (now - then) / 1000;
-    if (deltaTime > 0.016) { // Limita a ~60 FPS
+    if (deltaTime > 0.016) { //60fps
         Solver.getInstance().solve(spheres, deltaTime);
         then = now;
         renderer.render(scene, camera);
@@ -41,11 +39,12 @@ function animate(now: number) {
 }
 
 export function addBody(mass: number = 10, radius: number = 0.2) {
+    let color = new THREE.Color().setRGB(Utils.getRandomNumber(0, 1), Utils.getRandomNumber(0, 1), Utils.getRandomNumber(0, 1));
     const geometry = new THREE.SphereGeometry(radius, 32, 32);
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00, flatShading: true });
+    const material = new THREE.MeshStandardMaterial({ color: color, flatShading: true });
     const sphere = new THREE.Mesh(geometry, material);
 
-    sphere.position.set(Utils.getRandomNumber(-5, 5), Utils.getRandomNumber(-5, 5), Utils.getRandomNumber(-5, 5));
+    sphere.position.set(Math.random(), Math.random(), Math.random());
     sphere.userData = {
         velocity: new THREE.Vector3(Utils.getRandomNumber(-0.2, 0.2), Utils.getRandomNumber(-0.2, 0.2), Utils.getRandomNumber(-0.2, 0.2)),
         mass: mass,

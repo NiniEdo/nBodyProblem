@@ -11,25 +11,27 @@
 <body>
     <div id="menu">
         <div class="dropdown">
-            <button id = "menuButton">Menu</button>
-            <div class="dropdown-content" id = "options" style = "display: none">
-                <button id="addBody">Add Body</button>
+            <div class="dropdown-content">
+                <button id="menuButton">Menu</button>
+                <div id="options" style="display: none">
+                    <button id="addBody">Add Body</button>
                     <form id="addBodyForm" class="form-group" style="display: none">
                         <label for="mass">Mass:</label>
-                        <input type="number" id="mass" value="1000" min="0" required>
+                        <input type="number" id="mass" value="1" min="0" required>
 
                         <label for="radius">Radius:</label>
-                        <input type="number" id="radius" value="0.2" min="0.1" step="0.001" required>
+                        <input type="number" id="radius" value="0.2" min="0.000001" step="0.000001" required>
 
-                        <button id = "confirm" type="submit">Create</button>
+                        <button id="confirm" type="submit">Create</button>
                     </form>
-
-                <button id="showBodies">Show Bodies</button>
-                <button id="reset">Reset</button>
+                    <button id="listBodies">List Bodies</button>
+                    <button id="reset">Reset</button>
+                </div>
             </div>
         </div>
     </div>
     <script type="module" src="/target/renderer.js"></script>
     <script type="module" src="/target/domHandler.js"></script>
 </body>
+
 </html>
