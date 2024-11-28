@@ -1,5 +1,14 @@
 import * as renderer from './renderer';
 
+document.getElementById('menuButton')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const form = document.getElementById('options');
+    if (form) {
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+});
+
 document.getElementById('addBody')?.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
