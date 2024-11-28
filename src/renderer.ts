@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { Utils } from './utils';
+import { Utils } from './utils/utils';
+import Solver from './solver';
 
 const fps = 60;
 const fpsInterval = 1000 / fps;
@@ -31,12 +32,10 @@ renderer.setAnimationLoop(animate);
 let spheres: THREE.Mesh[] = [];
 
 function animate(now: number) {
-    const elapsed = now - then;
-    if (elapsed > fpsInterval) {
-        then = now - (elapsed % fpsInterval);
-        spheres.forEach((sphere) => {
-            sphere.position.add(sphere.userData.velocity);
-        });
+    const deltaTime = (now - then) / 1000;
+    if (deltaTime > 0.016) { // Limita a ~60 FPS
+        Solver.getInstance().solve(spheres, deltaTime);
+        then = now;
         renderer.render(scene, camera);
     }
 }

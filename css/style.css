@@ -2,13 +2,6 @@ body {
     margin: 0;
 }
 
-#menu {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
-}
-
 .dropdown {
     position: relative;
     display: inline-block;
@@ -21,7 +14,7 @@ body {
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    right:0;
+    right: 0;
 }
 
 .dropdown-content button {
@@ -33,6 +26,7 @@ body {
     border: none;
     background: none;
     text-align: left;
+    background-color: #0000FF;
 }
 
 .dropdown-content button:hover {
@@ -41,4 +35,48 @@ body {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.form-group {
+    padding: 10px;
+    border-top: 1px solid #000000;
+}
+
+#menu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+
+#reset {
+    background: #dc3545;
+    color: white;
+    text-align: center;
+}
+
+#reset:hover {
+    background: #c82333;
+}
+
+#addBody {
+    background: #3845fd;
+    color: white;
+    text-align: center;
+}
+
+#addBody:hover {
+    background: rgb(9, 33, 250);
+}
+
+#confirm {
+    border-radius: 10px;
+    background: #28a745;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 10px; 
+}
+
+#confirm:hover {
+    background: #218838;
 }
