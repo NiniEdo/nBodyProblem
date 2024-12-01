@@ -1,18 +1,31 @@
 import * as renderer from './renderer';
 
-document.getElementById('menuButton')?.addEventListener('click', (e) => {
+document.getElementById('menuButton')?.addEventListener('click', () => {
     const form = document.getElementById('options');
     if (form) {
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
     }
 });
 
-document.getElementById('addBody')?.addEventListener('click', (e) => {
-
+document.getElementById('addBody')?.addEventListener('click', () => {
     const form = document.getElementById('addBodyForm');
     if (form) {
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
     }
+});
+
+document.getElementById('settings')?.addEventListener('click', () => {
+    const form = document.getElementById('settingsForm');
+    if (form) {
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+});
+
+document.getElementById('settingsForm')?.addEventListener('change', () => {
+    const spawnRadius = Number((document.getElementById('spawnRadius') as HTMLInputElement)?.value) || 10;
+    const showAxis = (document.getElementById('showAxis') as HTMLInputElement)?.checked || false;
+    const showGrid = (document.getElementById('showGrid') as HTMLInputElement)?.checked || false;
+    renderer.setSettings(spawnRadius, showAxis, showGrid);
 });
 
 document.getElementById('addBodyForm')?.addEventListener('submit', (e) => {
@@ -25,7 +38,26 @@ document.getElementById('addBodyForm')?.addEventListener('submit', (e) => {
     renderer.addBody(mass, radius);
 });
 
+document.getElementById('stop')?.addEventListener('click', () => {
+    const stopButton = document.getElementById("stop");
+    const startButton = document.getElementById("start");
+    if (stopButton && startButton) {
+        (startButton as HTMLButtonElement).disabled = false;
+        (stopButton as HTMLButtonElement).disabled = true;
+    }
+    renderer.stopSimulation();
+});
+
+document.getElementById('start')?.addEventListener('click', () => {
+    const stopButton = document.getElementById("stop");
+    const startButton = document.getElementById("start");
+    if (stopButton && startButton) {
+        (startButton as HTMLButtonElement).disabled = true;
+        (stopButton as HTMLButtonElement).disabled = false;
+    }
+    renderer.startSimulation();
+});
+
 document.getElementById('reset')?.addEventListener('click', () => {
     renderer.reset();
-    
 });

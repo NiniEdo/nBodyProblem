@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 
 export default class Solver {
-    private static instance: Solver;
-    private readonly G: number = 1; // Costante gravitazionale aumentata per visualizzazione
-    private readonly softening: number = 0.1; // Evita divisioni per zero
+    static instance: Solver;
+    private readonly G: number = 1;
+    private readonly softening: number = 0.1;
+    private deltaT: number = 0.1;
     private constructor() { }
 
     public static getInstance(): Solver {
@@ -13,42 +14,25 @@ export default class Solver {
         return Solver.instance;
     }
 
-    public solve(bodies: THREE.Mesh[], deltaTime: number = 0.016): void {
-        const forces: THREE.Vector3[] = bodies.map(() => new THREE.Vector3());
-
-        for (let i = 0; i < bodies.length; i++) {
-            for (let j = i + 1; j < bodies.length; j++) {
-                const force = this.calculateGravitationalForce(bodies[i], bodies[j]);
-                forces[i].add(force);
-                forces[j].sub(force); // Forza uguale e opposta
+    public solve(spheres: THREE.Mesh[]): void {
+        spheres.forEach((sphere) => {
+            let objectAcceleration = new THREE.Vector3(0, 0, 0);
+    
+            spheres.forEach((other) => {
+                if (sphere !== other) {
+                    let vectorDiff = new THREE.Vector3().subVectors(other.position, sphere.position);
+                    let distance = vectorDiff.length() + this.softening;
+                    let scalar = this.G * other.userData.mass / Math.pow(distance, 3);
+                    let acceleration = vectorDiff.multiplyScalar(scalar);
+                    objectAcceleration.add(acceleration);
+                }
+            });
+            let maxAcceleration = 1;
+            if (objectAcceleration.length() > maxAcceleration) {
+                objectAcceleration.setLength(maxAcceleration);
             }
-        }
-
-        for (let i = 0; i < bodies.length; i++) {
-            const body = bodies[i];
-            const acceleration = forces[i].divideScalar(body.userData.mass);
-            
-            // v = v + a*dt
-            body.userData.velocity.add(acceleration.multiplyScalar(deltaTime));
-            
-            // x = x + v*dt
-            body.position.add(body.userData.velocity.clone().multiplyScalar(deltaTime));
-        }
-    }
-
-    private calculateGravitationalForce(body1: THREE.Mesh, body2: THREE.Mesh): THREE.Vector3 {
-        const direction = new THREE.Vector3()
-            .subVectors(body2.position, body1.position);
-        
-        const distance = direction.length();
-        
-        if (distance < this.softening) {
-            return new THREE.Vector3();
-        }
-
-        const forceMagnitude = this.G * body1.userData.mass * body2.userData.mass / 
-            (distance * distance + this.softening * this.softening);
-
-        return direction.normalize().multiplyScalar(forceMagnitude);
+            sphere.userData.velocity.add(objectAcceleration.clone().multiplyScalar(this.deltaT));
+            sphere.position.add(sphere.userData.velocity.clone().multiplyScalar(this.deltaT));
+        });
     }
 }

@@ -6,13 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>N body problem</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
 <body>
+    <div class="simulation-controls">
+        <div class="center-buttons">
+            <button id="stop" disabled>
+                <span class="material-symbols-outlined">pause</span>
+            </button>
+            <button id="start">
+                <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+        </div>
+    </div>
     <div id="menu">
         <div class="dropdown">
+            <button id="menuButton">
+                <span class="material-symbols-outlined">arrow_drop_down</span>
+            </button>
             <div class="dropdown-content">
-                <button id="menuButton">Menu</button>
                 <div id="options" style="display: none">
                     <button id="addBody">Add Body</button>
                     <form id="addBodyForm" class="form-group" style="display: none">
@@ -24,7 +38,17 @@
 
                         <button id="confirm" type="submit">Create</button>
                     </form>
-                    <button id="listBodies">List Bodies</button>
+                    <button id="settings">Settings</button>
+                    <form id="settingsForm" class="form-group" style="display: none">
+                        <label for="spawnRadius">Spawn Radius:</label>
+                        <input type="number" id="spawnRadius" value="5" min="0" required onkeydown="if(event.key === 'Enter'){event.preventDefault();}">
+
+                        <label for="showGrid">Show grid:</label>
+                        <input type="checkbox" id="showGrid">
+                        <br>
+                        <label for="showAxis">Show axis:</label>
+                        <input type="checkbox" id="showAxis">
+                    </form>
                     <button id="reset">Reset</button>
                 </div>
             </div>

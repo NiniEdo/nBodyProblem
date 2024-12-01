@@ -1,5 +1,7 @@
 body {
+    position: relative;
     margin: 0;
+    display: flex;
 }
 
 .dropdown {
@@ -7,14 +9,30 @@ body {
     display: inline-block;
 }
 
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+label {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #ffffff;
+    background-color: rgb(222, 225, 248);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 100;
     right: 0;
+    display: block;
 }
 
 .dropdown-content button {
@@ -28,20 +46,52 @@ body {
     background-color: #ffffff;
 }
 
-.dropdown-content {
-    display: block;
-}
-
 .form-group {
     padding: 10px;
-    border-top: 1px solid #000;
+}
+
+.simulation-controls {
+    position: fixed;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+center-buttons {
+    display: flex;
+}
+
+.material-symbols-outlined {
+    font-size: 24px;
+    vertical-align: middle;
+}
+
+#start,
+#stop {
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+}
+
+#start {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+#stop {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 
 #menu {
-    position: absolute;
-    top: 10px;
+    position: fixed;
     right: 10px;
     z-index: 100;
+    top: 10px;
 }
 
 #reset {
@@ -54,14 +104,10 @@ body {
     background: #c82333;
 }
 
-#addBody {
-    background: #3845fd;
-    color: white;
+#addBody,
+#settings {
+    color: rgb(0, 0, 0);
     text-align: center;
-}
-
-#addBody:hover {
-    background: rgb(9, 33, 250);
 }
 
 #confirm {
@@ -69,25 +115,19 @@ body {
     background: #28a745;
     color: #ffffff;
     text-align: center;
-    margin-top: 10px; 
-}
-
-#confirm:hover {
-    background: #218838;
+    margin-top: 10px;
 }
 
 #listBodies {
-    background: #fffb00;
     color: black;
     text-align: center;
 }
 
-#listBodies:hover {
-    background: #fffb00a2;
-}
-
-#menuButton{
+#menuButton {
     background: #ffffff;
+    border-color: #ffffff;
     color: black;
     text-align: center;
+    border-radius: 5px;
+    padding: 0px;
 }
