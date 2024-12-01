@@ -4,7 +4,7 @@ import { Utils } from './utils/utils';
 import Solver from './solver';
 
 const fps = 60;
-let spawnRadius = 5;
+let simulationArea = 10;
 let then = performance.now();
 
 const scene = new THREE.Scene();
@@ -23,13 +23,13 @@ new OrbitControls(camera, renderer.domElement);
 const hemisphereLight = new THREE.HemisphereLight(0xffffff, 10);
 scene.add(hemisphereLight);
 
-const gridHelper = new THREE.GridHelper(10, 10);
+const gridHelper = new THREE.GridHelper(simulationArea, simulationArea);
 const axesHelper = new THREE.AxesHelper(5);
 
-var boxGeometry = new THREE.BoxGeometry(20, 20, 20);
-var edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
-var edgesMaterial = new THREE.LineBasicMaterial({ color: 0x4080ff, linewidth: 2 });
-var wireframe = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+let boxGeometry = new THREE.BoxGeometry(20, 20, 20);
+let edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+let edgesMaterial = new THREE.LineBasicMaterial({ color: 0x4080ff, linewidth: 2 });
+let wireframe = new THREE.LineSegments(edgesGeometry, edgesMaterial);
 scene.add(wireframe);
 
 renderer.setAnimationLoop(animate);
@@ -41,7 +41,7 @@ function animate(now: number) {
     if (deltaTime > 1 / fps) {
         if (runSimulation === true) {
             let solver = Solver.getInstance()
-            solver.solve(spheres);
+            solver.solve(spheres, simulationArea);
         }
         then = now;
         renderer.render(scene, camera);
@@ -54,7 +54,7 @@ export function addBody(mass: number = 10, radius: number = 0.2) {
     const material = new THREE.MeshStandardMaterial({ color: color, flatShading: true });
     const sphere = new THREE.Mesh(geometry, material);
 
-    sphere.position.set(Utils.getRandomNumber(-spawnRadius, spawnRadius), Utils.getRandomNumber(-spawnRadius, spawnRadius), Utils.getRandomNumber(-spawnRadius, spawnRadius));
+    sphere.position.set(Utils.getRandomNumber(-simulationArea, simulationArea), Utils.getRandomNumber(-simulationArea, simulationArea), Utils.getRandomNumber(-simulationArea, simulationArea));
     sphere.userData = {
         velocity: new THREE.Vector3(Utils.getRandomNumber(-0.05, 0.05), Utils.getRandomNumber(-0.05, 0.05), Utils.getRandomNumber(-0.05, 0.05)),
         mass: mass,
@@ -65,8 +65,13 @@ export function addBody(mass: number = 10, radius: number = 0.2) {
     scene.add(sphere);
 }
 
-export function setSettings(radius: number, axis: boolean, grid: boolean) {
-    spawnRadius = radius;
+export function setSettings(simArea: number, axis: boolean, grid: boolean) {
+    let scaleFactor = (simArea / simulationArea) * wireframe.scale.x;
+    wireframe.scale.set(scaleFactor,scaleFactor,scaleFactor);
+    gridHelper.scale.set(scaleFactor*2,scaleFactor*2,scaleFactor*2);
+
+    simulationArea = simArea;
+    
     if (axis) {
         scene.add(axesHelper);
     } else {

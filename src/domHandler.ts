@@ -22,7 +22,7 @@ document.getElementById('settings')?.addEventListener('click', () => {
 });
 
 document.getElementById('settingsForm')?.addEventListener('change', () => {
-    const spawnRadius = Number((document.getElementById('spawnRadius') as HTMLInputElement)?.value) || 10;
+    const spawnRadius = Number((document.getElementById('simulationAria') as HTMLInputElement)?.value) || 10;
     const showAxis = (document.getElementById('showAxis') as HTMLInputElement)?.checked || false;
     const showGrid = (document.getElementById('showGrid') as HTMLInputElement)?.checked || false;
     renderer.setSettings(spawnRadius, showAxis, showGrid);
