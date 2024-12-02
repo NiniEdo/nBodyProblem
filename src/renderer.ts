@@ -42,7 +42,7 @@ function animate(now: number) {
     if (deltaTime > 1 / fps) {
         if (runSimulation === true) {
             let solver = Solver.getInstance()
-            solver.solve(spheres, simulationArea, e);
+            solver.solve(spheres, simulationArea/2, e);
         }
         then = now;
         renderer.render(scene, camera);
@@ -55,7 +55,7 @@ export function addBody(mass: number = 10, radius: number = 0.2) {
     const material = new THREE.MeshStandardMaterial({ color: color, flatShading: true });
     const sphere = new THREE.Mesh(geometry, material);
 
-    sphere.position.set(Utils.getRandomNumber(-simulationArea, simulationArea), Utils.getRandomNumber(-simulationArea, simulationArea), Utils.getRandomNumber(-simulationArea, simulationArea));
+    sphere.position.set(Utils.getRandomNumber(-simulationArea/2, simulationArea/2), Utils.getRandomNumber(-simulationArea/2, simulationArea/2), Utils.getRandomNumber(-simulationArea/2, simulationArea/2));
     sphere.userData = {
         velocity: new THREE.Vector3(Utils.getRandomNumber(-0.05, 0.05), Utils.getRandomNumber(-0.05, 0.05), Utils.getRandomNumber(-0.05, 0.05)),
         mass: mass,

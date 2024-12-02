@@ -14,7 +14,7 @@ export default class Solver {
         return Solver.instance;
     }
 
-    public solve(spheres: THREE.Mesh[], simulationArea: number, e: number): void {
+    public solve(spheres: THREE.Mesh[], bouns: number, e: number): void {
         spheres.forEach((sphere) => {
             let objectAcceleration = new THREE.Vector3(0, 0, 0);
             spheres.forEach((other) => {
@@ -36,28 +36,29 @@ export default class Solver {
 
             sphere.position.add(sphere.userData.velocity.clone().multiplyScalar(this.deltaT));
 
-            if (sphere.position.x + sphere.userData.radius > simulationArea) {
-                sphere.position.x = simulationArea - sphere.userData.radius;
-                sphere.userData.velocity.x *= 0.8;
-            } else if (sphere.position.x - sphere.userData.radius < -simulationArea) {
-                sphere.position.x = -simulationArea + sphere.userData.radius;
-                sphere.userData.velocity.x *= 0.8;
+            let wallBounceE : number = 0.8; 
+            if (sphere.position.x + sphere.userData.radius > bouns) {
+                sphere.position.x = bouns - sphere.userData.radius;
+                sphere.userData.velocity.x *= wallBounceE;
+            } else if (sphere.position.x - sphere.userData.radius < -bouns) {
+                sphere.position.x = -bouns + sphere.userData.radius;
+                sphere.userData.velocity.x *= wallBounceE;
             }
 
-            if (sphere.position.y + sphere.userData.radius > simulationArea) {
-                sphere.position.y = simulationArea - sphere.userData.radius;
-                sphere.userData.velocity.y *= 0.8;
-            } else if (sphere.position.y - sphere.userData.radius < -simulationArea) {
-                sphere.position.y = -simulationArea + sphere.userData.radius;
-                sphere.userData.velocity.y *= 0.8;
+            if (sphere.position.y + sphere.userData.radius > bouns) {
+                sphere.position.y = bouns - sphere.userData.radius;
+                sphere.userData.velocity.y *= wallBounceE;
+            } else if (sphere.position.y - sphere.userData.radius < -bouns) {
+                sphere.position.y = -bouns + sphere.userData.radius;
+                sphere.userData.velocity.y *= wallBounceE;
             }
 
-            if (sphere.position.z + sphere.userData.radius > simulationArea) {
-                sphere.position.z = simulationArea - sphere.userData.radius;
-                sphere.userData.velocity.z *= 0.8;
-            } else if (sphere.position.z - sphere.userData.radius < -simulationArea) {
-                sphere.position.z = -simulationArea + sphere.userData.radius;
-                sphere.userData.velocity.z *= 0.8;
+            if (sphere.position.z + sphere.userData.radius > bouns) {
+                sphere.position.z = bouns - sphere.userData.radius;
+                sphere.userData.velocity.z *= wallBounceE;
+            } else if (sphere.position.z - sphere.userData.radius < -bouns) {
+                sphere.position.z = -bouns + sphere.userData.radius;
+                sphere.userData.velocity.z *= wallBounceE;
             }
 
             let maxVel = 2.5;
