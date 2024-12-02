@@ -1,0 +1,11 @@
+services: 
+  python-app: 
+    build: ./
+    container_name: nBodyProblem
+    ports:
+      - "8080:80"
+    networks: 
+      - app-net
+networks:
+  app-net: 
+    driver: bridge
