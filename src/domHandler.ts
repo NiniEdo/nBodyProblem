@@ -23,9 +23,10 @@ document.getElementById('settings')?.addEventListener('click', () => {
 
 document.getElementById('settingsForm')?.addEventListener('change', () => {
     const spawnRadius = Number((document.getElementById('simulationAria') as HTMLInputElement)?.value) || 10;
+    const e = Number((document.getElementById('elastic') as HTMLInputElement)?.value) || 1.5;
     const showAxis = (document.getElementById('showAxis') as HTMLInputElement)?.checked || false;
     const showGrid = (document.getElementById('showGrid') as HTMLInputElement)?.checked || false;
-    renderer.setSettings(spawnRadius, showAxis, showGrid);
+    renderer.setSettings(spawnRadius, showAxis, showGrid, e);
 });
 
 document.getElementById('addBodyForm')?.addEventListener('submit', (e) => {

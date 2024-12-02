@@ -5,6 +5,7 @@ import Solver from './solver';
 
 const fps = 60;
 let simulationArea = 10;
+let e = 1.5;
 let then = performance.now();
 
 const scene = new THREE.Scene();
@@ -23,8 +24,8 @@ new OrbitControls(camera, renderer.domElement);
 const hemisphereLight = new THREE.HemisphereLight(0xffffff, 10);
 scene.add(hemisphereLight);
 
-const gridHelper = new THREE.GridHelper(simulationArea, simulationArea);
-const axesHelper = new THREE.AxesHelper(5);
+const gridHelper = new THREE.GridHelper(simulationArea*2, simulationArea*2);
+const axesHelper = new THREE.AxesHelper(10);
 
 let boxGeometry = new THREE.BoxGeometry(20, 20, 20);
 let edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
@@ -41,7 +42,7 @@ function animate(now: number) {
     if (deltaTime > 1 / fps) {
         if (runSimulation === true) {
             let solver = Solver.getInstance()
-            solver.solve(spheres, simulationArea);
+            solver.solve(spheres, simulationArea, e);
         }
         then = now;
         renderer.render(scene, camera);
@@ -65,13 +66,19 @@ export function addBody(mass: number = 10, radius: number = 0.2) {
     scene.add(sphere);
 }
 
-export function setSettings(simArea: number, axis: boolean, grid: boolean) {
-    let scaleFactor = (simArea / simulationArea) * wireframe.scale.x;
-    wireframe.scale.set(scaleFactor,scaleFactor,scaleFactor);
-    gridHelper.scale.set(scaleFactor*2,scaleFactor*2,scaleFactor*2);
+export function setSettings(simArea: number, axis: boolean, grid: boolean, restitution: number) {
 
-    simulationArea = simArea;
+    if (simulationArea !== simArea) {
+        let scaleFactor = (simArea / simulationArea) * wireframe.scale.x;
+        wireframe.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        gridHelper.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        reset();
+    }
+
+    e = restitution;
     
+    simulationArea = simArea;
+
     if (axis) {
         scene.add(axesHelper);
     } else {
