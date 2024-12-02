@@ -24,10 +24,10 @@ new OrbitControls(camera, renderer.domElement);
 const hemisphereLight = new THREE.HemisphereLight(0xffffff, 10);
 scene.add(hemisphereLight);
 
-const gridHelper = new THREE.GridHelper(simulationArea*2, simulationArea*2);
-const axesHelper = new THREE.AxesHelper(10);
+const gridHelper = new THREE.GridHelper(simulationArea, simulationArea);
+const axesHelper = new THREE.AxesHelper(simulationArea/2);
 
-let boxGeometry = new THREE.BoxGeometry(20, 20, 20);
+let boxGeometry = new THREE.BoxGeometry(simulationArea, simulationArea, simulationArea);
 let edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
 let edgesMaterial = new THREE.LineBasicMaterial({ color: 0x4080ff, linewidth: 2 });
 let wireframe = new THREE.LineSegments(edgesGeometry, edgesMaterial);
@@ -72,6 +72,7 @@ export function setSettings(simArea: number, axis: boolean, grid: boolean, resti
         let scaleFactor = (simArea / simulationArea) * wireframe.scale.x;
         wireframe.scale.set(scaleFactor, scaleFactor, scaleFactor);
         gridHelper.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        axesHelper.scale.set(scaleFactor, scaleFactor, scaleFactor);
         reset();
     }
 
