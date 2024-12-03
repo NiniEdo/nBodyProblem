@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export default class Solver {
-    static instance: Solver;
+    private static instance: Solver;
     private readonly G: number = 1;
     private readonly softening: number = 0.1;
     private deltaT: number = 0.1;
@@ -14,7 +14,7 @@ export default class Solver {
         return Solver.instance;
     }
 
-    public solve(spheres: THREE.Mesh[], bouns: number, e: number): void {
+    public solve(spheres: THREE.Mesh[], bounds: number, e: number): void {
         spheres.forEach((sphere) => {
             let objectAcceleration = new THREE.Vector3(0, 0, 0);
             spheres.forEach((other) => {
@@ -36,28 +36,28 @@ export default class Solver {
 
             sphere.position.add(sphere.userData.velocity.clone().multiplyScalar(this.deltaT));
 
-            let wallBounceE : number = 0.8; 
-            if (sphere.position.x + sphere.userData.radius > bouns) {
-                sphere.position.x = bouns - sphere.userData.radius;
+            let wallBounceE : number = 1.2; 
+            if (sphere.position.x + sphere.userData.radius > bounds) {
+                sphere.position.x = bounds - sphere.userData.radius;
                 sphere.userData.velocity.x *= wallBounceE;
-            } else if (sphere.position.x - sphere.userData.radius < -bouns) {
-                sphere.position.x = -bouns + sphere.userData.radius;
+            } else if (sphere.position.x - sphere.userData.radius < -bounds) {
+                sphere.position.x = -bounds + sphere.userData.radius;
                 sphere.userData.velocity.x *= wallBounceE;
             }
 
-            if (sphere.position.y + sphere.userData.radius > bouns) {
-                sphere.position.y = bouns - sphere.userData.radius;
+            if (sphere.position.y + sphere.userData.radius > bounds) {
+                sphere.position.y = bounds - sphere.userData.radius;
                 sphere.userData.velocity.y *= wallBounceE;
-            } else if (sphere.position.y - sphere.userData.radius < -bouns) {
-                sphere.position.y = -bouns + sphere.userData.radius;
+            } else if (sphere.position.y - sphere.userData.radius < -bounds) {
+                sphere.position.y = -bounds + sphere.userData.radius;
                 sphere.userData.velocity.y *= wallBounceE;
             }
 
-            if (sphere.position.z + sphere.userData.radius > bouns) {
-                sphere.position.z = bouns - sphere.userData.radius;
+            if (sphere.position.z + sphere.userData.radius > bounds) {
+                sphere.position.z = bounds - sphere.userData.radius;
                 sphere.userData.velocity.z *= wallBounceE;
-            } else if (sphere.position.z - sphere.userData.radius < -bouns) {
-                sphere.position.z = -bouns + sphere.userData.radius;
+            } else if (sphere.position.z - sphere.userData.radius < -bounds) {
+                sphere.position.z = -bounds + sphere.userData.radius;
                 sphere.userData.velocity.z *= wallBounceE;
             }
 
