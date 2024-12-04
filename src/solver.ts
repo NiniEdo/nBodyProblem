@@ -9,7 +9,6 @@ export default class Solver {
 
     public static getInstance(): Solver {
         if (!Solver.instance) {
-            Solver.instance = new Solver();
         }
         return Solver.instance;
     }
