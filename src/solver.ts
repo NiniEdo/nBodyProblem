@@ -36,29 +36,29 @@ export default class Solver {
 
             sphere.position.add(sphere.userData.velocity.clone().multiplyScalar(this.deltaT));
 
-            let wallBounceE : number = 1.2; 
+            let wallBounceE : number = 0.1; 
             if (sphere.position.x + sphere.userData.radius > bounds) {
                 sphere.position.x = bounds - sphere.userData.radius;
-                sphere.userData.velocity.x *= wallBounceE;
+                sphere.userData.velocity.x *= -wallBounceE;
             } else if (sphere.position.x - sphere.userData.radius < -bounds) {
                 sphere.position.x = -bounds + sphere.userData.radius;
-                sphere.userData.velocity.x *= wallBounceE;
+                sphere.userData.velocity.x *= -wallBounceE;
             }
 
             if (sphere.position.y + sphere.userData.radius > bounds) {
                 sphere.position.y = bounds - sphere.userData.radius;
-                sphere.userData.velocity.y *= wallBounceE;
+                sphere.userData.velocity.y *= -wallBounceE;
             } else if (sphere.position.y - sphere.userData.radius < -bounds) {
                 sphere.position.y = -bounds + sphere.userData.radius;
-                sphere.userData.velocity.y *= wallBounceE;
+                sphere.userData.velocity.y *= -wallBounceE;
             }
 
             if (sphere.position.z + sphere.userData.radius > bounds) {
                 sphere.position.z = bounds - sphere.userData.radius;
-                sphere.userData.velocity.z *= wallBounceE;
+                sphere.userData.velocity.z *= -wallBounceE;
             } else if (sphere.position.z - sphere.userData.radius < -bounds) {
                 sphere.position.z = -bounds + sphere.userData.radius;
-                sphere.userData.velocity.z *= wallBounceE;
+                sphere.userData.velocity.z *= -wallBounceE;
             }
 
             let maxVel = 2.5;

@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Utils } from './utils/utils';
 import Solver from './solver';
 
+const solver = Solver.getInstance()
 const fps = 60;
 let simulationArea = 10;
 let e = 1.5;
@@ -41,7 +42,6 @@ function animate(now: number) {
     const deltaTime = (now - then) / 1000;
     if (deltaTime > 1 / fps) {
         if (runSimulation === true) {
-            let solver = Solver.getInstance()
             solver.solve(spheres, simulationArea/2, e);
         }
         then = now;
