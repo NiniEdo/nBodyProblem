@@ -35,7 +35,7 @@ export default class Solver {
             sphere.userData.velocity.add(objectAcceleration.clone().multiplyScalar(this.deltaT));
 
             sphere.position.add(sphere.userData.velocity.clone().multiplyScalar(this.deltaT));
-
+            //detect if the sphere is out of bounds
             let wallBounceE : number = 0.1; 
             if (sphere.position.x + sphere.userData.radius > bounds) {
                 sphere.position.x = bounds - sphere.userData.radius;
@@ -66,6 +66,7 @@ export default class Solver {
                 sphere.userData.velocity.setLength(maxVel);
             }
 
+            //detect if the sphere is colliding with another sphere
             spheres.forEach(other => {
                 if (sphere !== other) {
                     let delta = new THREE.Vector3().subVectors(sphere.position, other.position)
