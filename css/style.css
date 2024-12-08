@@ -129,3 +129,21 @@ center-buttons {
     border-radius: 5px;
     padding: 0px;
 }
+
+a:link,
+a:visited {
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#info {
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: small;
+    display: inline-block;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 100%;
+}
